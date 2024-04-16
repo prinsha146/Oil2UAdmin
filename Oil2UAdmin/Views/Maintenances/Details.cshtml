@@ -1,0 +1,75 @@
+﻿@model Oil2UAdmin.Maintenance
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Maintenance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BookedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UploadedImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UploadedImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferenceEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReferenceEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferenceAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReferenceAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferencePhoneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReferencePhoneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaintenanceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

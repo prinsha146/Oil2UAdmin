@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Oil2UModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="UserId" Nullable="false" Type="int" />
+    <Property Name="OrderId" Nullable="false" Type="int" />
+    <Property Name="FromDate" Nullable="false" Type="datetime" />
+    <Property Name="ToDate" Nullable="false" Type="datetime" />
+    <Property Name="RequestedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Maintenance">
+    <Key>
+      <PropertyRef Name="MaintenanceId" />
+    </Key>
+    <Property Name="MaintenanceId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="BookedDate" Nullable="false" Type="datetime" />
+    <Property Name="UploadedImage" MaxLength="250" Type="varchar" />
+    <Property Name="Comment" Type="text" />
+    <Property Name="UserId" Nullable="false" Type="int" />
+    <Property Name="ReferenceEmail" MaxLength="250" Type="varchar" />
+    <Property Name="ReferenceAddress" MaxLength="250" Type="varchar" />
+    <Property Name="ReferencePhoneNo" MaxLength="50" Type="varchar" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="UserId" Nullable="false" Type="int" />
+    <Property Name="Quantity" Nullable="false" Type="int" />
+    <Property Name="Duration" Type="int" />
+    <Property Name="StartDate" Nullable="false" Type="datetime" />
+    <Property Name="Intervals" Nullable="false" Type="int" />
+    <Property Name="Email" Nullable="false" MaxLength="100" Type="varchar" />
+    <Property Name="PhoneNo" Nullable="false" MaxLength="50" Type="varbinary" />
+  </EntityType>
+  <EntityType Name="UrgentDelivery">
+    <Key>
+      <PropertyRef Name="UrgentRequestId" />
+    </Key>
+    <Property Name="UrgentRequestId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="OrderId" Nullable="false" Type="int" />
+    <Property Name="Quantity" Nullable="false" Type="int" />
+    <Property Name="DeliveryDate" Nullable="false" Type="datetime" />
+    <Property Name="UserId" Nullable="false" Type="int" />
+    <Property Name="ReferenceEmail" MaxLength="100" Type="varchar" />
+    <Property Name="ReferencePhoneNo" MaxLength="50" Type="varchar" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="FirstName" Nullable="false" MaxLength="100" Type="varchar" />
+    <Property Name="LastName" Nullable="false" MaxLength="100" Type="varchar" />
+    <Property Name="CompanyName" Nullable="false" MaxLength="250" Type="varchar" />
+    <Property Name="Address" Nullable="false" MaxLength="250" Type="varchar" />
+    <Property Name="PhoneNo" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="Email" Nullable="false" MaxLength="200" Type="varchar" />
+    <Property Name="UserName" MaxLength="100" Type="varchar" />
+    <Property Name="Password" Nullable="false" MaxLength="100" Type="varchar" />
+  </EntityType>
+  <Association Name="FK_Invoice_Order">
+    <End Type="Self.Order" Multiplicity="1" Role="Order" />
+    <End Type="Self.Invoice" Multiplicity="*" Role="Invoice" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_User">
+    <End Type="Self.User" Multiplicity="1" Role="User" />
+    <End Type="Self.Invoice" Multiplicity="*" Role="Invoice" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Maintenance_User">
+    <End Type="Self.User" Multiplicity="1" Role="User" />
+    <End Type="Self.Maintenance" Multiplicity="*" Role="Maintenance" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Maintenance">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UrgentDelivery_User">
+    <End Type="Self.User" Multiplicity="1" Role="User" />
+    <End Type="Self.UrgentDelivery" Multiplicity="*" Role="UrgentDelivery" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UrgentDelivery">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Oil2UModelStoreContainer">
+    <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Maintenance" EntityType="Self.Maintenance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UrgentDelivery" EntityType="Self.UrgentDelivery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Invoice_Order" Association="Self.FK_Invoice_Order">
+      <End EntitySet="Order" Role="Order" />
+      <End EntitySet="Invoice" Role="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_User" Association="Self.FK_Invoice_User">
+      <End EntitySet="User" Role="User" />
+      <End EntitySet="Invoice" Role="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Maintenance_User" Association="Self.FK_Maintenance_User">
+      <End EntitySet="User" Role="User" />
+      <End EntitySet="Maintenance" Role="Maintenance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UrgentDelivery_User" Association="Self.FK_UrgentDelivery_User">
+      <End EntitySet="User" Role="User" />
+      <End EntitySet="UrgentDelivery" Role="UrgentDelivery" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

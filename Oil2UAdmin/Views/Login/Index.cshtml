@@ -1,0 +1,133 @@
+﻿@{
+    /**/
+
+
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Oil2U</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/png">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link href="~/images/fav.png" rel="shortcut icon" type="image/png">
+    <link rel="stylesheet" href="~/Content/AdminLTE.min.css">
+    @*<link href="~/assets/css/custom-bootstrap-margin-padding.css" rel="stylesheet" />*@
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/Content/blue.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+        ::placeholder {
+            color: red;
+            opacity: 1; /* Firefox */
+        }
+
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: red;
+        }
+
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color: red;
+        }
+    </style>
+</head>
+<body class="login-page ">
+    <div class="login-box">
+
+        <div class="login-box-body">
+            <center class="companylogo">
+                <a href="#" class="logintitle">
+                    <img src="~/images/oil2u_logo.png" alt="Logo" style="max-height:50%; max-width: 50%;" />
+                    @*<h3><strong style="color:darkblue">Oil2U Admin Login</strong></h3>*@
+                </a>
+            </center>
+
+            <div class="p-15 formbox">
+                <p class="login-box-msg"></p>
+                @{
+                    if (ViewBag.Message != "")
+                    {
+                        <div class="callout callout-danger">
+                            @* <button type="button" class="close" data-dismiss="alert">×</button>*@
+                            <span style="font-size:14px;"><i class="fa fa-warning"></i> @ViewBag.Message</span>
+                        </div>
+                    }
+
+                    if (ViewBag.SuccessMessage != "")
+                    {
+                        <div class="callout callout-success">
+                            <span style="font-size:14px;"><i class="fa fa-tick"></i>@ViewBag.SuccessMessage</span>
+                        </div>
+                    }
+                }
+                @using (Html.BeginForm())
+                {
+                    @*<h1 class="login-title mt-0 mb-15">Login </h1>*@
+                    <div class="form-group has-feedback">
+                        <label style="color:black">Email</label>
+                        <input type="text" class="form-control" placeholder="Email" name="Email" required="required">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label style="color:black">Password</label>
+                        <input type="password" class="form-control" placeholder="******" name="Password" id="Password" required="required">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <!--<div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox"> Remember Me
+                                </label>
+                            </div>-->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-success btn-block btn-flat">
+                                Login
+                            </button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                }
+            </div>
+
+            <!--<a href="#">I forgot my password</a>-->
+
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery 3 -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/Scripts/icheck.min.js"></script>
+    <script>
+		$(function () {
+			// alert "Login index";
+			$('input').iCheck({
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_square-blue',
+				increaseArea: '20%' // optional
+			});
+		});
+    </script>
+</body>
+</html>

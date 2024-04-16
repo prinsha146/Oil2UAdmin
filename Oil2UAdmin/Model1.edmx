@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Oil2UModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceId" />
+          </Key>
+          <Property Name="InvoiceId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="UserId" Nullable="false" Type="int" />
+          <Property Name="OrderId" Nullable="false" Type="int" />
+          <Property Name="FromDate" Nullable="false" Type="datetime" />
+          <Property Name="ToDate" Nullable="false" Type="datetime" />
+          <Property Name="RequestedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Maintenance">
+          <Key>
+            <PropertyRef Name="MaintenanceId" />
+          </Key>
+          <Property Name="MaintenanceId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="BookedDate" Nullable="false" Type="datetime" />
+          <Property Name="UploadedImage" MaxLength="250" Type="varchar" />
+          <Property Name="Comment" Type="text" />
+          <Property Name="UserId" Nullable="false" Type="int" />
+          <Property Name="ReferenceEmail" MaxLength="250" Type="varchar" />
+          <Property Name="ReferenceAddress" MaxLength="250" Type="varchar" />
+          <Property Name="ReferencePhoneNo" MaxLength="50" Type="varchar" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="UserId" Nullable="false" Type="int" />
+          <Property Name="Quantity" Nullable="false" Type="int" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="StartDate" Nullable="false" Type="datetime" />
+          <Property Name="Intervals" Nullable="false" Type="int" />
+          <Property Name="Email" Nullable="false" MaxLength="100" Type="varchar" />
+          <Property Name="PhoneNo" Nullable="false" MaxLength="50" Type="varbinary" />
+        </EntityType>
+        <EntityType Name="UrgentDelivery">
+          <Key>
+            <PropertyRef Name="UrgentRequestId" />
+          </Key>
+          <Property Name="UrgentRequestId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="OrderId" Nullable="false" Type="int" />
+          <Property Name="Quantity" Nullable="false" Type="int" />
+          <Property Name="DeliveryDate" Nullable="false" Type="datetime" />
+          <Property Name="UserId" Nullable="false" Type="int" />
+          <Property Name="ReferenceEmail" MaxLength="100" Type="varchar" />
+          <Property Name="ReferencePhoneNo" MaxLength="50" Type="varchar" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="FirstName" Nullable="false" MaxLength="100" Type="varchar" />
+          <Property Name="LastName" Nullable="false" MaxLength="100" Type="varchar" />
+          <Property Name="CompanyName" Nullable="false" MaxLength="250" Type="varchar" />
+          <Property Name="Address" Nullable="false" MaxLength="250" Type="varchar" />
+          <Property Name="PhoneNo" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="Email" Nullable="false" MaxLength="200" Type="varchar" />
+          <Property Name="UserName" MaxLength="100" Type="varchar" />
+          <Property Name="Password" Nullable="false" MaxLength="100" Type="varchar" />
+        </EntityType>
+        <Association Name="FK_Invoice_Order">
+          <End Type="Self.Order" Multiplicity="1" Role="Order" />
+          <End Type="Self.Invoice" Multiplicity="*" Role="Invoice" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoice_User">
+          <End Type="Self.User" Multiplicity="1" Role="User" />
+          <End Type="Self.Invoice" Multiplicity="*" Role="Invoice" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maintenance_User">
+          <End Type="Self.User" Multiplicity="1" Role="User" />
+          <End Type="Self.Maintenance" Multiplicity="*" Role="Maintenance" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Maintenance">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrgentDelivery_User">
+          <End Type="Self.User" Multiplicity="1" Role="User" />
+          <End Type="Self.UrgentDelivery" Multiplicity="*" Role="UrgentDelivery" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UrgentDelivery">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Oil2UModelStoreContainer">
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Maintenance" EntityType="Self.Maintenance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UrgentDelivery" EntityType="Self.UrgentDelivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Invoice_Order" Association="Self.FK_Invoice_Order">
+            <End EntitySet="Order" Role="Order" />
+            <End EntitySet="Invoice" Role="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoice_User" Association="Self.FK_Invoice_User">
+            <End EntitySet="User" Role="User" />
+            <End EntitySet="Invoice" Role="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maintenance_User" Association="Self.FK_Maintenance_User">
+            <End EntitySet="User" Role="User" />
+            <End EntitySet="Maintenance" Role="Maintenance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrgentDelivery_User" Association="Self.FK_UrgentDelivery_User">
+            <End EntitySet="User" Role="User" />
+            <End EntitySet="UrgentDelivery" Role="UrgentDelivery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Oil2UModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceId" />
+          </Key>
+          <Property Name="InvoiceId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="UserId" Nullable="false" Type="Int32" />
+          <Property Name="OrderId" Nullable="false" Type="Int32" />
+          <Property Name="FromDate" Nullable="false" Precision="3" Type="DateTime" />
+          <Property Name="ToDate" Nullable="false" Precision="3" Type="DateTime" />
+          <Property Name="RequestedDate" Precision="3" Type="DateTime" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Invoice_Order" FromRole="Invoice" ToRole="Order" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Invoice_User" FromRole="Invoice" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Maintenance">
+          <Key>
+            <PropertyRef Name="MaintenanceId" />
+          </Key>
+          <Property Name="MaintenanceId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="BookedDate" Nullable="false" Precision="3" Type="DateTime" />
+          <Property Name="UploadedImage" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Comment" MaxLength="Max" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="UserId" Nullable="false" Type="Int32" />
+          <Property Name="ReferenceEmail" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ReferenceAddress" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ReferencePhoneNo" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Maintenance_User" FromRole="Maintenance" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="UserId" Nullable="false" Type="Int32" />
+          <Property Name="Quantity" Nullable="false" Type="Int32" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="StartDate" Nullable="false" Precision="3" Type="DateTime" />
+          <Property Name="Intervals" Nullable="false" Type="Int32" />
+          <Property Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="PhoneNo" Nullable="false" MaxLength="50" FixedLength="false" Type="Binary" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK_Invoice_Order" FromRole="Order" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="UrgentDelivery">
+          <Key>
+            <PropertyRef Name="UrgentRequestId" />
+          </Key>
+          <Property Name="UrgentRequestId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="OrderId" Nullable="false" Type="Int32" />
+          <Property Name="Quantity" Nullable="false" Type="Int32" />
+          <Property Name="DeliveryDate" Nullable="false" Precision="3" Type="DateTime" />
+          <Property Name="UserId" Nullable="false" Type="Int32" />
+          <Property Name="ReferenceEmail" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ReferencePhoneNo" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UrgentDelivery_Order" FromRole="UrgentDelivery" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="FirstName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="LastName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="CompanyName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Address" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="PhoneNo" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Email" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="UserName" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Password" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK_Invoice_User" FromRole="User" ToRole="Invoice" />
+          <NavigationProperty Name="Maintenances" Relationship="Self.FK_Maintenance_User" FromRole="User" ToRole="Maintenance" />
+          <NavigationProperty Name="UrgentDeliveries" Relationship="Self.FK_UrgentDelivery_Order" FromRole="User" ToRole="UrgentDelivery" />
+          </EntityType>
+        <Association Name="FK_Invoice_Order">
+          <End Type="Self.Order" Multiplicity="1" Role="Order" />
+          <End Type="Self.Invoice" Multiplicity="*" Role="Invoice" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoice_User">
+          <End Type="Self.User" Multiplicity="1" Role="User" />
+          <End Type="Self.Invoice" Multiplicity="*" Role="Invoice" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maintenance_User">
+          <End Type="Self.User" Multiplicity="1" Role="User" />
+          <End Type="Self.Maintenance" Multiplicity="*" Role="Maintenance" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Maintenance">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrgentDelivery_Order">
+          <End Type="Self.User" Multiplicity="1" Role="User" />
+          <End Type="Self.UrgentDelivery" Multiplicity="*" Role="UrgentDelivery" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UrgentDelivery">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Oil2UEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+          <EntitySet Name="Maintenances" EntityType="Self.Maintenance" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="UrgentDeliveries" EntityType="Self.UrgentDelivery" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Invoice_Order" Association="Self.FK_Invoice_Order">
+            <End EntitySet="Orders" Role="Order" />
+            <End EntitySet="Invoices" Role="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoice_User" Association="Self.FK_Invoice_User">
+            <End EntitySet="Users" Role="User" />
+            <End EntitySet="Invoices" Role="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maintenance_User" Association="Self.FK_Maintenance_User">
+            <End EntitySet="Users" Role="User" />
+            <End EntitySet="Maintenances" Role="Maintenance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrgentDelivery_Order" Association="Self.FK_UrgentDelivery_Order">
+            <End EntitySet="Users" Role="User" />
+            <End EntitySet="UrgentDeliveries" Role="UrgentDelivery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Oil2UModelStoreContainer" CdmEntityContainer="Oil2UEntities">
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="Oil2UModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maintenances">
+            <EntityTypeMapping TypeName="Oil2UModel.Maintenance">
+              <MappingFragment StoreEntitySet="Maintenance">
+                <ScalarProperty Name="MaintenanceId" ColumnName="MaintenanceId" />
+                <ScalarProperty Name="BookedDate" ColumnName="BookedDate" />
+                <ScalarProperty Name="UploadedImage" ColumnName="UploadedImage" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ReferenceEmail" ColumnName="ReferenceEmail" />
+                <ScalarProperty Name="ReferenceAddress" ColumnName="ReferenceAddress" />
+                <ScalarProperty Name="ReferencePhoneNo" ColumnName="ReferencePhoneNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Oil2UModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Intervals" ColumnName="Intervals" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UrgentDeliveries">
+            <EntityTypeMapping TypeName="Oil2UModel.UrgentDelivery">
+              <MappingFragment StoreEntitySet="UrgentDelivery">
+                <ScalarProperty Name="UrgentRequestId" ColumnName="UrgentRequestId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ReferenceEmail" ColumnName="ReferenceEmail" />
+                <ScalarProperty Name="ReferencePhoneNo" ColumnName="ReferencePhoneNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Oil2UModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

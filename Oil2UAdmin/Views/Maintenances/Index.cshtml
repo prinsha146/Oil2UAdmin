@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Oil2UAdmin.Maintenance>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadedImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReferenceEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReferenceAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReferencePhoneNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadedImage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReferenceEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReferenceAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReferencePhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaintenanceId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaintenanceId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaintenanceId })
+        </td>
+    </tr>
+}
+
+</table>
